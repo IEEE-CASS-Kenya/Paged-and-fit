@@ -80,18 +80,25 @@ class _LoginState extends State<LogIn> {
 
   Widget _emailForm() {
     return TextFormField(
+      obscureText: true,
       decoration: const InputDecoration(hintText: 'Email...'),
       onSaved: (_value) {
         setState(() {
           _email = _value;
         });
       },
+      validator: (_value) {
+        bool _result = _value!.contains(
+          RegExp(
+              r"^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@[a-zA-Z0-9-]+(?:\. [a-zA-Z0-9-]+)*$"),
+        );
+        _result ? null : "Please enter a valid email address";
+      },
     );
   }
 
   Widget _passwordForm() {
     return TextFormField(
-      obscureText: true,
       decoration: const InputDecoration(hintText: 'Password...'),
       onSaved: (_value) {
         setState(() {
