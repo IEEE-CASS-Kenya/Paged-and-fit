@@ -18,6 +18,7 @@ class _LoginState extends State<LogIn> {
     _deviceHeight = MediaQuery.of(context).size.height;
     _deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.symmetric(
@@ -52,7 +53,7 @@ class _LoginState extends State<LogIn> {
 
   Widget _loginButton() {
     return MaterialButton(
-      onPressed: () {},
+      onPressed: _loginUser,
       minWidth: _deviceWidth! * 0.70,
       height: _deviceHeight! * 0.06,
       color: Colors.red,
@@ -64,9 +65,15 @@ class _LoginState extends State<LogIn> {
     );
   }
 
+  void _loginUser() {
+    if (_loginFormKey.currentState!.validate()) {
+      _loginFormKey.currentState!.save();
+    }
+  }
+
   Widget _loginForm() {
     return Container(
-      height: _deviceHeight! * 0.6,
+      height: _deviceHeight! * 0.20,
       child: Form(
           key: _loginFormKey,
           child: Column(
@@ -80,7 +87,6 @@ class _LoginState extends State<LogIn> {
 
   Widget _emailForm() {
     return TextFormField(
-      obscureText: true,
       decoration: const InputDecoration(hintText: 'Email...'),
       onSaved: (_value) {
         setState(() {
@@ -92,13 +98,14 @@ class _LoginState extends State<LogIn> {
           RegExp(
               r"^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@[a-zA-Z0-9-]+(?:\. [a-zA-Z0-9-]+)*$"),
         );
-        _result ? null : "Please enter a valid email address";
+        return _result ? null : "Please enter a valid email address";
       },
     );
   }
 
   Widget _passwordForm() {
     return TextFormField(
+      obscureText: true,
       decoration: const InputDecoration(hintText: 'Password...'),
       onSaved: (_value) {
         setState(() {
