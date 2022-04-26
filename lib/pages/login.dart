@@ -26,13 +26,14 @@ class _LoginState extends State<LogIn> {
           ),
           child: Center(
               child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               _titleWidget(),
               _loginForm(),
               _loginButton(),
+              registerPageLink(),
             ],
           )),
         ),
@@ -65,6 +66,20 @@ class _LoginState extends State<LogIn> {
     );
   }
 
+  Widget registerPageLink() {
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, 'register'),
+      child: const Text(
+        "Don't have an account?",
+        style: TextStyle(
+          color: Colors.blue,
+          fontSize: 15,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+    );
+  }
+
   void _loginUser() {
     if (_loginFormKey.currentState!.validate()) {
       _loginFormKey.currentState!.save();
@@ -77,7 +92,7 @@ class _LoginState extends State<LogIn> {
       child: Form(
           key: _loginFormKey,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [_emailForm(), _passwordForm()],
